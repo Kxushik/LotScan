@@ -77,8 +77,6 @@ for i in range(len(lines)):
         line_list.append([x1, lines[i][0][1], x2, lines[i][0][3]])
         cv2.line(line_image, (x1, lines[i][0][1]), (x2, lines[i][0][3]), (255, 0 , 0), 2)
 
-print(line_list)
-
 #Draw lines onto image
 for i in range(len(line_list)):
     cv2.line(line_image, (line_list[i][0], line_list[i][1]), (line_list[i][2], line_list[i][3]), (255, 0 , 0), 2)
@@ -315,7 +313,6 @@ for i in range(1, len(spaces_dict) + 1):
     #if the average of the empty space is less than the average of the occupied space with a 2 int difference (to account for noise variability), then the space is occupied
     if abs((spaces_dict[i].empty_avg - new_avg)) > 2:
         print (f'Parking Space {i} is occupied')
-        print("Empty Average: ", spaces_dict[i].empty_avg, " New Average: ", new_avg)
 
         #Draw a red box around the space
         cv2.line(color_parking_lot,pt4,pt3,(255,0,0),2)
