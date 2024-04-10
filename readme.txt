@@ -1,3 +1,6 @@
+Video Link: https://www.youtube.com/watch?v=Y95RKMxvpwc
+
+
 Setup and Running the Application
 -> The application itself is lotscan.py, it is recommended to use VSCode to view the source code
 
