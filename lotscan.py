@@ -204,10 +204,13 @@ lots = []
 
 #Find parking lots -> Spencer add comments
 # Defining the lots and their coordinates
-# After sorting, the coordinates of the corners can be found through an offset.
+# After sorting, the coordinates of the corners of each lot can be found through an offset.
 # sCenter is the 'corners' array
-for i in range(0, len(sCenter), 20):
-    for j in range(i, i + 9):
+# this code assumes the parking lot will have an even number of parking spots
+# i.e the lowest number of lots is two back to back, with a total of 8 coordinates
+print("len:",len(sCenter))
+for i in range(0, len(sCenter), int(len(sCenter)/2)):
+    for j in range(i, i + int(((len(sCenter)/2)-2)/2)):
       lots.append([sCenter[j],sCenter[j+1],sCenter[j+10],sCenter[j+11]])
 
       c1 = (int(sCenter[j][0]), int(sCenter[j][1]))
