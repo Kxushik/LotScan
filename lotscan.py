@@ -152,7 +152,7 @@ def find_intersections(perpendicular_lines):
             if y3 == y4:
                 intersection_points.append((x1, y3))
             else:
-                #calculate slope if line2 is not horizontal (only used for 2 cases in the test img)
+                #calculate slope if line2 is not horizontal to find the point of intersection (only used for 2 cases in the test img)
                 m2 = (y4 - y3) / (x4 - x3)
                 b2 = y3 - m2 * x3
                 y = m2 * x1 + b2
@@ -163,7 +163,7 @@ def find_intersections(perpendicular_lines):
             if x3 == x4:
                 intersection_points.append((x3, y1))
             else:
-                #calculate slope if line2 is not vertical (only used for 2 cases in the test img)
+                #calculate slope if line2 is not vertical to find the point of intersection (only used for 2 cases in the test img)
                 m2 = (y4 - y3) / (x4 - x3)
                 b2 = y3 - m2 * x3
                 x = (y1 - b2) / m2
