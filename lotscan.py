@@ -97,10 +97,8 @@ def calculate_angle(line1, line2):
     #establishing vectors [x1, y1, x2, y2]
     AB = (line1[2] - line1[0], line1[3] - line1[1])
     CD = (line2[2] - line2[0], line2[3] - line2[1])
-
     #dot product : Ax*Bx + Ay*By
     dot_product = AB[0] * CD[0] + AB[1] * CD[1]
-
     #magnitude of vectors
     magnitude_AB = np.sqrt(AB[0] ** 2 + AB[1] ** 2)
     magnitude_CD = np.sqrt(CD[0] ** 2 + CD[1] ** 2)
@@ -109,7 +107,6 @@ def calculate_angle(line1, line2):
     if magnitude_AB != 0 and magnitude_CD != 0:
         #theta, which will be converted into degrees
         theta = dot_product / (magnitude_AB * magnitude_CD)
-
         #converting angle to degrees
         angle_radians = np.arccos(theta)
         angle_degrees = np.degrees(angle_radians)
