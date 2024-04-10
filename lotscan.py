@@ -62,8 +62,10 @@ median2 = int(np.median(heightsBot))
 line_list = []
 
 #Top and Bottom Lines for Parking Spaces (Open End)
-cv2.line(line_image, (0, median), (600, median), (255, 0 , 0), 2)
-cv2.line(line_image, (0, median2), (600, median2), (255, 0 , 0), 2)
+# Draw two horizontal lines to enclose the veritcal lines
+height,width = img1.shape[:2]
+cv2.line(line_image, (0, median), (width, median), (255, 0 , 0), 2)
+cv2.line(line_image, (0, median2), (width, median2), (255, 0 , 0), 2)
 
 #Append new lines to list
 line_list.append([0, median, 600, median])
@@ -208,7 +210,6 @@ lots = []
 # sCenter is the 'corners' array
 # this code assumes the parking lot will have an even number of parking spots
 # i.e the lowest number of lots is two back to back, with a total of 8 coordinates
-print("len:",len(sCenter))
 for i in range(0, len(sCenter), int(len(sCenter)/2)):
     for j in range(i, i + int(((len(sCenter)/2)-2)/2)):
       lots.append([sCenter[j],sCenter[j+1],sCenter[j+10],sCenter[j+11]])
