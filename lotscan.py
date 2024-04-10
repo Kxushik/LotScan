@@ -40,19 +40,21 @@ lines = cv2.HoughLinesP(image=img1_canny, rho=1, theta=np.pi/180, threshold=75, 
 line_image = np.copy(img1)
 
 #Modifying Co-ordinates to apply lines on the open ends of the parking spaces -> Spencer add comments
+# Array to store north-side y-coordinates of vertical lines
 heightsTop = []
+# Array to store south-side y-coordinates of vertical lines
 heightsBot = []
 
-count = 0
 prevLine = lines[0]
-threshold = 30
 for line in lines:
     for x1, y1, x2, y2 in line:
+        # If current and previous lines are vertical, append their north side end-point to topArray, append their south side end-point to bottomArray
         if (x1 == x2 and prevLine[0][0] == prevLine[0][2]):
           heightsBot.append(y1)
           heightsTop.append(y2)
     prevLine = line
 
+# Calculate median of heightsTop and heightsBottom
 median = int(np.median(heightsTop))
 median2 = int(np.median(heightsBot))
 
@@ -67,7 +69,7 @@ cv2.line(line_image, (0, median2), (600, median2), (255, 0 , 0), 2)
 line_list.append([0, median, 600, median])
 line_list.append([0, median2, 600, median2])
 
-
+# Adjust y-value to be the median, if the lines are vertical (<4 slant)
 for i in range(len(lines)):
     for x1, y1, x2, y2 in lines[i]:
         if (abs(lines[i][0][0] - lines[i][0][2]) < 4):
@@ -201,6 +203,9 @@ sCenter = centers[sortIndex]
 lots = []
 
 #Find parking lots -> Spencer add comments
+# Defining the lots and their coordinates
+# After sorting, the coordinates of the corners can be found through an offset.
+# sCenter is the 'corners' array
 for i in range(0, len(sCenter), 20):
     for j in range(i, i + 9):
       lots.append([sCenter[j],sCenter[j+1],sCenter[j+10],sCenter[j+11]])
