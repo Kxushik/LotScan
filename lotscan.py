@@ -89,16 +89,16 @@ for i in range(len(line_list)):
 lines_edges = cv2.addWeighted(img1, 0.8, line_image, 1, 0)
 
 
-#Processing Perpendicular Lines -> Kyle add comments
+#Processing Perpendicular Lines
 perpendicular_lines = []
 
 #calculate angle between two lines (for perpendicularity)
 def calculate_angle(line1, line2):
-    #establishing vectors
+    #establishing vectors [x1, y1, x2, y2]
     AB = (line1[2] - line1[0], line1[3] - line1[1])
     CD = (line2[2] - line2[0], line2[3] - line2[1])
 
-    #dot product
+    #dot product : Ax*Bx + Ay*By
     dot_product = AB[0] * CD[0] + AB[1] * CD[1]
 
     #magnitude of vectors
@@ -107,11 +107,11 @@ def calculate_angle(line1, line2):
 
     #avoiding division by zero
     if magnitude_AB != 0 and magnitude_CD != 0:
-        #cosine of the angle
-        cos_angle = dot_product / (magnitude_AB * magnitude_CD)
+        #theta, which will be converted into degrees
+        theta = dot_product / (magnitude_AB * magnitude_CD)
 
         #converting angle to degrees
-        angle_radians = np.arccos(cos_angle)
+        angle_radians = np.arccos(theta)
         angle_degrees = np.degrees(angle_radians)
         
         return angle_degrees
@@ -123,9 +123,11 @@ def calculate_angle(line1, line2):
 def find_perpendicular(lines):
     for i in range(len(lines)):
         for j in range(len(lines)):
+            #avoid comparing the same line
             if (i != j):
                 angle = calculate_angle(lines[i], lines[j])
-                if (85 <= angle <= 95):
+                #threshold for a perpendicular line as not all lines in the image are perfectly straight/perpendicular
+                if (89 <=angle <= 91) :#angle <= 91):
                     perpendicular_lines.append((lines[i], lines[j]))
 
 find_perpendicular(line_list)
@@ -138,7 +140,7 @@ for i in range(len(perpendicular_lines)):
     cv2.line(line_image, (x1, y1), (x2, y2), (0, 255, 0), 2)
     cv2.line(line_image, (x3, y3), (x4, y4), (0, 255, 0), 2)
 
-#Finding Intersection Points of Perpindicular Lines -> Kyle add comments
+#Finding Intersection Points of Perpindicular Lines
 parking_spaces = {}
 
 def find_intersections(perpendicular_lines):
@@ -153,7 +155,7 @@ def find_intersections(perpendicular_lines):
             if y3 == y4:
                 intersection_points.append((x1, y3))
             else:
-                #calculate slope if line2 is not horizontal
+                #calculate slope if line2 is not horizontal (only used for 2 cases in the test img)
                 m2 = (y4 - y3) / (x4 - x3)
                 b2 = y3 - m2 * x3
                 y = m2 * x1 + b2
@@ -164,7 +166,7 @@ def find_intersections(perpendicular_lines):
             if x3 == x4:
                 intersection_points.append((x3, y1))
             else:
-                #calculate slope if line2 is not vertical
+                #calculate slope if line2 is not vertical (only used for 2 cases in the test img)
                 m2 = (y4 - y3) / (x4 - x3)
                 b2 = y3 - m2 * x3
                 x = (y1 - b2) / m2
@@ -204,7 +206,7 @@ sCenter = centers[sortIndex]
 
 lots = []
 
-#Find parking lots -> Spencer add comments
+#Find parking lots
 # Defining the lots and their coordinates
 # After sorting, the coordinates of the corners of each lot can be found through an offset.
 # sCenter is the 'corners' array
@@ -226,7 +228,7 @@ for i in range(0, len(sCenter), int(len(sCenter)/2)):
 
 finalLots = np.array(lots)
 
-#Parking Space Class -> Paul
+#Parking Space Class
 
 #Define Parking Space Class
 class ParkingSpace:
